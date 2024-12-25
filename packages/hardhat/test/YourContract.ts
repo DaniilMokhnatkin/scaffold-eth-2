@@ -21,20 +21,18 @@ describe("Voting", function () {
   });
 
   it("Should allow creating multiple elections", async function () {
-    // Создаём отдельные голосования
     const elections = [
       { name: "Favorite Color", options: ["Red", "Blue", "Green"] },
       { name: "Best Programming Language", options: ["JavaScript", "Python", "Rust"] },
       { name: "Preferred Drink", options: ["Coffee", "Tea", "Juice"] },
     ];
 
-    // Проверяем каждое голосование
     for (const [index, election] of elections.entries()) {
-      await voting.createElection(election.name, election.options, 3600); // Создаём новое голосование
-      const createdElection = await voting.elections(index + 1); // Проверяем ID начиная с 1
+      await voting.createElection(election.name, election.options, 3600);
+      const createdElection = await voting.elections(index + 1);
 
-      expect(createdElection.name).to.equal(election.name); // Проверяем название
-      expect(await voting.getOptions(index + 1)).to.deep.equal(election.options); // Проверяем опции
+      expect(createdElection.name).to.equal(election.name);
+      expect(await voting.getOptions(index + 1)).to.deep.equal(election.options);
     }
   });
 

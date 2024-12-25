@@ -27,7 +27,6 @@ export default function Home() {
     return new ethers.Contract(contractAddress, contractABI, signer);
   };
 
-  // Загрузить все голосования
   const fetchElections = async () => {
     const contract = await getContract();
     if (!contract) return;
@@ -47,7 +46,6 @@ export default function Home() {
     }
   };
 
-  // Создание голосования
   const handleCreateElection = async () => {
     const contract = await getContract();
     if (!contract) return;
@@ -56,13 +54,12 @@ export default function Home() {
       const tx = await contract.createElection(electionName, options.split(","), 3600);
       await tx.wait();
       alert("Election created successfully!");
-      fetchElections(); // Обновить список голосований
+      fetchElections();
     } catch (error) {
       console.error("Error creating election:", error);
     }
   };
 
-  // Голосование
   const handleVote = async () => {
     if (selectedElectionId === null) {
       alert("Please select an election to vote on!");
@@ -81,7 +78,6 @@ export default function Home() {
     }
   };
 
-  // Получение результатов
   const handleFetchResults = async () => {
     if (selectedElectionId === null) {
       alert("Please select an election to fetch results!");
@@ -108,7 +104,6 @@ export default function Home() {
       <h1 className="text-4xl font-bold text-center mb-8 text-white">Decentralized Voting</h1>
 
       <div className="max-w-4xl mx-auto space-y-6">
-        {/* Форма создания голосования */}
         <div className="bg-white p-6 rounded-lg shadow-lg">
           <h2 className="text-2xl font-semibold mb-4">Create Election</h2>
           <div className="space-y-4">
@@ -135,7 +130,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Секция голосования */}
         <div className="bg-white p-6 rounded-lg shadow-lg">
           <h2 className="text-2xl font-semibold mb-4">Vote</h2>
           <div className="space-y-4">
@@ -175,7 +169,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Секция результатов */}
         <div className="bg-white p-6 rounded-lg shadow-lg">
           <h2 className="text-2xl font-semibold mb-4">Results</h2>
           <div className="space-y-4">
